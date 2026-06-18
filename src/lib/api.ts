@@ -1,5 +1,5 @@
 // API base URL — change to your backend URL in production
-const API_BASE = import.meta.env.VITE_API_URL || 'http://localhost:3001/api'
+const API_BASE = import.meta.env.VITE_API_URL || 'https://cemer-back-production.up.railway.app/api'
 
 // Helper: get token from localStorage
 function getToken(): string | null {

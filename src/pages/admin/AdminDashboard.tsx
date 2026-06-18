@@ -14,7 +14,7 @@ import Badge from '@/components/ui/Badge'
 import Button from '@/components/ui/Button'
 import { dashboardApi, membersApi } from '@/lib/api'
 import { formatCurrency, formatDate } from '@/lib/utils'
-import { MemberStatus, MembershipPlan } from '@/types'
+import { MemberStatus, MembershipPlan, Member } from '@/types'
 
 const statusLabel: Record<MemberStatus, string> = {
   active: 'Aktif',
@@ -39,7 +39,7 @@ const AdminDashboard: React.FC = () => {
   const [stats, setStats] = useState<any>(null)
   const [chartData, setChartData] = useState<any[]>([])
   const [planDist, setPlanDist] = useState<any[]>([])
-  const [recentMembers, setRecentMembers] = useState<any[]>([])
+  const [recentMembers, setRecentMembers] = useState<Member[]>([])
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {

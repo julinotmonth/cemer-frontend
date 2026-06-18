@@ -58,7 +58,7 @@ const RegisterPage: React.FC = () => {
   const [direction, setDirection] = useState(1)
   const [selectedPlan, setSelectedPlan] = useState<MembershipPlan>('regular')
   const [selectedDuration, setSelectedDuration] = useState<MembershipDuration>('1')
-  const [trainers, setTrainers] = React.useState<any[]>([])
+  const [trainers, setTrainers] = React.useState<Trainer[]>([])
   useEffect(() => {
     trainersApi.list().then(res => setTrainers(res.data)).catch(() => {})
   }, [])

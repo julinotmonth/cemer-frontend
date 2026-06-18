@@ -13,7 +13,7 @@ import Textarea from '@/components/ui/Textarea'
 import { useMemberStore } from '@/store/memberStore'
 import { formatCurrency } from '@/lib/utils'
 import { PLANS } from '@/lib/data'
-import { MembershipPlan, MembershipDuration } from '@/types'
+import { MembershipPlan, MembershipDuration, Member } from '@/types'
 
 const schema = z.object({
   name: z.string().min(3, 'Nama minimal 3 karakter'),
@@ -44,7 +44,7 @@ const AdminMemberEdit: React.FC = () => {
   useEffect(() => {
     const load = async () => {
       if (!id) return
-      let member = getMemberById(id)
+      let member: Member | null | undefined = getMemberById(id)
       if (!member) {
         member = await fetchMemberById(id)
       }

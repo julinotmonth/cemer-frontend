@@ -10,25 +10,25 @@ import Button from '@/components/ui/Button'
 import Badge from '@/components/ui/Badge'
 import { membersApi } from '@/lib/api'
 import { formatDate, formatCurrency, calculateBMI } from '@/lib/utils'
-import { MemberStatus, MembershipPlan } from '@/types'
-import { PLANS, TRAINERS } from '@/lib/data'
+import { MemberStatus, MembershipPlan, Member } from '@/types'
+import { PLANS } from '@/lib/data'
 
 const planLabel: Record<MembershipPlan, string> = { basic: 'Basic', regular: 'Regular', premium: 'Premium' }
 const statusLabel: Record<MemberStatus, string> = { active: 'Aktif', pending: 'Menunggu Konfirmasi', expired: 'Kedaluwarsa' }
-const statusIcon = { active: CheckCircle2, pending: Clock, expired: XCircle }
-const statusColor = {
+const statusIcon: Record<MemberStatus, typeof CheckCircle2> = { active: CheckCircle2, pending: Clock, expired: XCircle }
+const statusColor: Record<MemberStatus, string> = {
   active: 'text-green-600',
   pending: 'text-yellow-600',
   expired: 'text-red-500',
 }
-const statusBg = {
+const statusBg: Record<MemberStatus, string> = {
   active: 'bg-green-50 border-green-200',
   pending: 'bg-yellow-50 border-yellow-200',
   expired: 'bg-red-50 border-red-200',
 }
 
 const CheckStatusPage: React.FC = () => {
-  const [found, setFound] = React.useState<any[]>([])
+  const [found, setFound] = React.useState<Member[]>([])
   const [query, setQuery] = useState('')
   const [searched, setSearched] = useState(false)
   const [loading, setLoading] = useState(false)
@@ -173,8 +173,15 @@ const CheckStatusPage: React.FC = () => {
 
               {found.map((member, i) => {
                 const plan = PLANS.find(p => p.id === member.plan)!
-                const trainer = member.trainerId ? TRAINERS.find(t => t.id === member.trainerId) : null
-                const trainerSchedule = trainer?.availableSchedules.find(s => s.id === member.trainerSchedule)
+                const trainer = member.trainerId ? {
+                  id: member.trainerId,
+                  name: (member as any).trainerName,
+                  specialization: (member as any).trainerSpecialization,
+                  avatar: (member as any).trainerAvatar,
+                } : null
+                const trainerSchedule = member.trainerSchedule
+                  ? { id: member.trainerSchedule, day: (member as any).scheduleDay, time: (member as any).scheduleTime }
+                  : null
                 const StatusIcon = statusIcon[member.status]
                 const age = member.birthDate
                   ? Math.floor((Date.now() - new Date(member.birthDate).getTime()) / (365.25 * 24 * 3600 * 1000))

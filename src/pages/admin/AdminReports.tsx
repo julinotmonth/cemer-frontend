@@ -162,10 +162,10 @@ const AdminReports: React.FC = () => {
     const dateStr = now.toLocaleDateString('id-ID', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })
     const timeStr = now.toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' })
 
-    const equipmentRows = equipmentList.map(eq => {
+    const equipmentRows = equipmentList.map((eq: any) => {
       const statusClass = eq.status === 'kritis' ? 'kritis' : eq.status === 'perlu-perhatian' ? 'perhatian' : 'baik'
-      const statusLabel = STATUS_CONFIG[eq.status].label
-      const monthlyData = eq.issues.map(m =>
+      const statusLabel = (STATUS_CONFIG as any)[eq.status].label
+      const monthlyData = eq.issues.map((m: any) =>
         `<div class="month-cell"><div class="month-label">${m.month}</div><div class="month-count" style="color:${m.count >= 3 ? '#EF4444' : m.count >= 2 ? '#F59E0B' : m.count === 0 ? '#9CA3AF' : '#10B981'}">${m.count === 0 ? '—' : m.count + 'x'}</div></div>`
       ).join('')
       return `
@@ -179,7 +179,7 @@ const AdminReports: React.FC = () => {
         <tr class="tips-row">
           <td colspan="5" style="padding:8px 12px 14px;background:#F8FAFC">
             <div style="font-size:11px;font-weight:600;color:#374151;margin-bottom:4px">💡 Tips Perawatan:</div>
-            <ul style="margin:0;padding-left:16px">${eq.maintenanceTips.map(t => `<li style="font-size:11px;color:#6B7280;margin-bottom:2px">${t}</li>`).join('')}</ul>
+            <ul style="margin:0;padding-left:16px">${eq.maintenanceTips.map((t: string) => `<li style="font-size:11px;color:#6B7280;margin-bottom:2px">${t}</li>`).join('')}</ul>
           </td>
         </tr>
       `

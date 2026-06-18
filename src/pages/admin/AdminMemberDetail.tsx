@@ -10,7 +10,7 @@ import Button from '@/components/ui/Button'
 import Badge from '@/components/ui/Badge'
 import { useMemberStore } from '@/store/memberStore'
 import { formatDate, formatCurrency, calculateBMI } from '@/lib/utils'
-import { MemberStatus, MembershipPlan } from '@/types'
+import { MemberStatus, MembershipPlan, Member } from '@/types'
 import { PLANS } from '@/lib/data'
 import { membersApi } from '@/lib/api'
 
@@ -21,7 +21,7 @@ const AdminMemberDetail: React.FC = () => {
   const { id } = useParams<{ id: string }>()
   const navigate = useNavigate()
   const { getMemberById, updateMember, fetchMemberById } = useMemberStore()
-  const [member, setMember] = React.useState<any>(getMemberById(id!) || null)
+  const [member, setMember] = React.useState<Member | null>(getMemberById(id!) || null)
 
   useEffect(() => {
     if (!member && id) {
